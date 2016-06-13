@@ -75,17 +75,18 @@ google.load("jquery", "1.3");
 
        def=scan(c,pl,def);
        for(i=1;i<=1521;i++){
-           ct[i-1]=6*atk[i-1]+def[i-1];
+           ct[i-1]=3*atk[i-1]+2*def[i-1];
        }
 
         var P=dec(ct);
+        Re(cw,P,atk);
         atk=scan(cw,P,atk);
         c[P]=-1;
         cw[P]=1;
         cb[P]=-1;
         $('#w'+(P+1)).css('opacity','1');
         Re(c,pl,def);
-        Re(cw,P,atk);
+        
         W=win(cw,P+1);
        if(W[0]==5||W[1]==5||W[2]==5||W[3]==5){
            document.write('<font size="7" id="textw">五子棋</font><br>');
@@ -125,31 +126,31 @@ google.load("jquery", "1.3");
         var R;
         for(k=1;k<=4;k++){    
             R=scanAdd(c,pl-39*k);
-            def[pl-1-39*k]=(10*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-39*k]));
+            def[pl-1-39*k]=(3*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-39*k]));
             console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-29*k]);
             R=scanAdd(c,pl+39*k);
-            def[pl-1+39*k]=(10*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+39*k]));
+            def[pl-1+39*k]=(3*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+39*k]));
             console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+39*k]);
 
             R=scanAdd(c,pl-40*k);
-            def[pl-1-40*k]=(R[0]*R[0]+10*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-40*k]));
+            def[pl-1-40*k]=(R[0]*R[0]+3*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-40*k]));
             console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-30*k]);
             R=scanAdd(c,pl+40*k);
-            def[pl-1+40*k]=(R[0]*R[0]+10*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+40*k]));
+            def[pl-1+40*k]=(R[0]*R[0]+3*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+40*k]));
             console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+40*k]);
 
             R=scanAdd(c,pl-k);
-            def[pl-1-k]=(R[0]*R[0]+R[1]*R[1]+10*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-k]));
+            def[pl-1-k]=(R[0]*R[0]+R[1]*R[1]+3*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-k]));
             console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-k]);
             R=scanAdd(c,pl+k);
-            def[pl-1+k]=(R[0]*R[0]+R[1]*R[1]+10*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+k]));
+            def[pl-1+k]=(R[0]*R[0]+R[1]*R[1]+3*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+k]));
             console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+k]);
 
             R=scanAdd(c,pl-38*k);
-            def[pl-1-38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+10*R[3]*R[3])*(1-Math.abs(c[pl-1-38*k]));
+            def[pl-1-38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+3*R[3]*R[3])*(1-Math.abs(c[pl-1-38*k]));
             console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-28*k]);
             R=scanAdd(c,pl+38*k);
-            def[pl-1+38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+10*R[3]*R[3])*(1-Math.abs(c[pl-1+38*k]));
+            def[pl-1+38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+3*R[3]*R[3])*(1-Math.abs(c[pl-1+38*k]));
             console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+38*k]);
 
         }return def;
@@ -159,24 +160,24 @@ google.load("jquery", "1.3");
         var R;
         for(k=1;k<=4;k++){      
             R=scanAdd(c,pl-39*k);
-            def[pl-1-39*k]=def[pl-1-39*k]-9*R[0]*R[0];
+            def[pl-1-39*k]=def[pl-1-39*k]-2*R[0]*R[0];
             R=scanAdd(c,pl+39*k);
-            def[pl-1+39*k]=def[pl-1+39*k]-9*R[0]*R[0];
+            def[pl-1+39*k]=def[pl-1+39*k]-2*R[0]*R[0];
 
             R=scanAdd(c,pl-40*k);
-            def[pl-1-40*k]=def[pl-1-40*k]-9*R[1]*R[1];
+            def[pl-1-40*k]=def[pl-1-40*k]-2*R[1]*R[1];
             R=scanAdd(c,pl+40*k);
-            def[pl-1+40*k]=def[pl-1+40*k]-9*R[1]*R[1];
+            def[pl-1+40*k]=def[pl-1+40*k]-2*R[1]*R[1];
 
             R=scanAdd(c,pl-k);
-            def[pl-1-k]=def[pl-1-k]-9*R[2]*R[2];
+            def[pl-1-k]=def[pl-1-k]-2*R[2]*R[2];
             R=scanAdd(c,pl+k);
-            def[pl-1+k]=def[pl-1+k]-9*R[2]*R[2];
+            def[pl-1+k]=def[pl-1+k]-2*R[2]*R[2];
   
             R=scanAdd(c,pl-38*k);
-            def[pl-1-38*k]=def[pl-1-38*k]-9*R[3]*R[3];
+            def[pl-1-38*k]=def[pl-1-38*k]-2*R[3]*R[3];
             R=scanAdd(c,pl+38*k);
-            def[pl-1+38*k]=def[pl-1+38*k]-9*R[3]*R[3];
+            def[pl-1+38*k]=def[pl-1+38*k]-2*R[3]*R[3];
  
         }
     }
