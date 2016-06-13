@@ -23,7 +23,8 @@ google.load("jquery", "1.3");
 
     <script type="text/javascript">
 
-    var cb=[],atk=[],def=[],c=[],cw=[],ct=[],P=761;
+    var cb=[],atk=[],def=[],c=[],cw=[],ct=[];
+    
     for(j=1;j<=39;j++)
     {
     for(i=1;i<=39;i++)
@@ -42,21 +43,21 @@ google.load("jquery", "1.3");
         cb[ii+39*jj-39-1]=0;
         
     }}
-    var play = function(b,c,cb,def,atk,P){
+    var play = function(b,c,cb,def,atk){
         var id=$(b).attr('id');
         var l=id.length;
         var num = id.slice(1,l);
         var pl=parseInt(num);
         if(c[pl-1]==0){
             $(b).css('opacity','1');
-            AI(b,c,cb,def,atk,pl,P);
+            AI(b,c,cb,def,atk,pl);
         }
 
     }
 
 
 
-    var AI = function(b,c,cb,def,atk,pl,P){
+    var AI = function(b,c,cb,def,atk,pl){
     
         cb[pl-1]=1;
         c[pl-1]=1;
@@ -74,18 +75,22 @@ google.load("jquery", "1.3");
        }
 
        def=scan(c,pl,def);
+var tr=[];
+        
+       
        for(i=1;i<=1521;i++){
            ct[i-1]=2*atk[i-1]+def[i-1];
        }
-Re(cw,P,atk);
         P=dec(ct);
         
-        atk=scan(cw,P,atk);
         c[P]=-1;
         cw[P]=1;
         cb[P]=-1;
+        pl=P;
+
+
+        atk=scan(cw,P+1,atk);
         $('#w'+(P+1)).css('opacity','1');
-        Re(c,pl,def);
         
         W=win(cw,P+1);
        if(W[0]==5||W[1]==5||W[2]==5||W[3]==5){
@@ -99,105 +104,77 @@ Re(cw,P,atk);
         console.log("P = "+P);
     }
 
-    var scanAdd = function(c,pl){
+    var scanAdd = function(ca,p){
         var u=1,l=1,ul=1,dl=1,u1=1,u2=1,l1=1,l2=1,ul1=1,ul2=1,dl1=1,dl2=1;
         for(i=1;i<=4;i++){
-            u1=(Math.abs(3-(c[pl-39*i+38]+c[pl-39*i-1]+Math.abs(c[pl-39*i+38]+c[pl-39*i-1])))-3)*u1/(-2);
-            u2=(Math.abs(3-(c[pl+39*i-40]+c[pl+39*i-1]+Math.abs(c[pl+39*i-40]+c[pl+39*i-1])))-3)*u2/(-2);
-            u=u+(c[pl-39*i-1]+Math.abs(c[pl-39*i-1]))*u1/2+(c[pl+39*i-1]+Math.abs(c[pl+39*i-1]))*u2/2;
+            u1=(Math.abs(3-(ca[p-39*i+38]+ca[p-39*i-1]+Math.abs(ca[p-39*i+38]+ca[p-39*i-1])))-3)*u1/(-2);
+            u2=(Math.abs(3-(ca[p+39*i-40]+ca[p+39*i-1]+Math.abs(ca[p+39*i-40]+ca[p+39*i-1])))-3)*u2/(-2);
+            u=u+(ca[p-39*i-1]+Math.abs(ca[p-39*i-1]))*u1/2+(ca[p+39*i-1]+Math.abs(ca[p+39*i-1]))*u2/2;
 
-            l1=(Math.abs(3-(c[pl-i-1]+c[pl-i]+Math.abs(c[pl-i-1]+c[pl-i])))-3)*l1/(-2);
-            l2=(Math.abs(3-(c[pl+i-1]+c[pl+i-2]+Math.abs(c[pl+i-1]+c[pl+i-2])))-3)*l2/(-2);
-            l=l+(c[pl-i-1]+Math.abs(c[pl-i-1]))*l1/2+(c[pl+i-1]+Math.abs(c[pl+i-1]))*l2/2;
+            l1=(Math.abs(3-(ca[p-i-1]+ca[p-i]+Math.abs(ca[p-i-1]+ca[p-i])))-3)*l1/(-2);
+            l2=(Math.abs(3-(ca[p+i-1]+ca[p+i-2]+Math.abs(ca[p+i-1]+ca[p+i-2])))-3)*l2/(-2);
+            l=l+(ca[p-i-1]+Math.abs(ca[p-i-1]))*l1/2+(ca[p+i-1]+Math.abs(ca[p+i-1]))*l2/2;
 
-            ul1=(Math.abs(3-(c[pl-40*i+39]+c[pl-40*i-1]+Math.abs(c[pl-40*i+39]+c[pl-40*i-1])))-3)*ul1/(-2);
-            ul2=(Math.abs(3-(c[pl+40*i-31]+c[pl+40*i-1]+Math.abs(c[pl+40*i-31]+c[pl+40*i-1])))-3)*ul2/(-2);
-            ul=ul+(c[pl-40*i-1]+Math.abs(c[pl-40*i-1]))*ul1/2+(c[pl+40*i-1]+Math.abs(c[pl+40*i-1]))*ul2/2;
+            ul1=(Math.abs(3-(ca[p-40*i+39]+ca[p-40*i-1]+Math.abs(ca[p-40*i+39]+ca[p-40*i-1])))-3)*ul1/(-2);
+            ul2=(Math.abs(3-(ca[p+40*i-31]+ca[p+40*i-1]+Math.abs(ca[p+40*i-31]+ca[p+40*i-1])))-3)*ul2/(-2);
+            ul=ul+(ca[p-40*i-1]+Math.abs(ca[p-40*i-1]))*ul1/2+(ca[p+40*i-1]+Math.abs(ca[p+40*i-1]))*ul2/2;
 
-            dl1=(Math.abs(3-(c[pl-38*i+37]+c[pl-38*i-1]+Math.abs(c[pl-38*i+37]+c[pl-38*i-1])))-3)*dl1/(-2);
-            dl2=(Math.abs(3-(c[pl+38*i-39]+c[pl+38*i-1]+Math.abs(c[pl+38*i-39]+c[pl+38*i-1])))-3)*dl2/(-2);
-            dl=dl+(c[pl-38*i-1]+Math.abs(c[pl-38*i-1]))*dl1/2+(c[pl+38*i-1]+Math.abs(c[pl+38*i-1]))*dl2/2;
+            dl1=(Math.abs(3-(ca[p-38*i+37]+ca[p-38*i-1]+Math.abs(ca[p-38*i+37]+ca[p-38*i-1])))-3)*dl1/(-2);
+            dl2=(Math.abs(3-(ca[p+38*i-39]+ca[p+38*i-1]+Math.abs(ca[p+38*i-39]+ca[p+38*i-1])))-3)*dl2/(-2);
+            dl=dl+(ca[p-38*i-1]+Math.abs(ca[p-38*i-1]))*dl1/2+(ca[p+38*i-1]+Math.abs(ca[p+38*i-1]))*dl2/2;
         }
         var R=[u,ul,l,dl];
         return R ;
     }
 
-    var scan = function(c,pl,def){
+    var scan = function(ca,p,d){
         var R;
         for(k=1;k<=4;k++){    
-            R=scanAdd(c,pl-39*k);
-            def[pl-1-39*k]=(3*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-39*k]));
-            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-29*k]);
-            R=scanAdd(c,pl+39*k);
-            def[pl-1+39*k]=(3*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+39*k]));
-            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+39*k]);
+            R=scanAdd(ca,p-39*k);
+            d[p-1-39*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[0]-3+Math.abs(R[0]-3))*(R[0]-3+Math.abs(R[0]-3))+10*(R[0]-4+Math.abs(R[0]-4))*(R[0]-4+Math.abs(R[0]-4)))*(1-Math.abs(ca[p-1-39*k]));
+            R=scanAdd(ca,p+39*k);
+            d[p-1+39*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[0]-3+Math.abs(R[0]-3))*(R[0]-3+Math.abs(R[0]-3))+10*(R[0]-4+Math.abs(R[0]-4))*(R[0]-4+Math.abs(R[0]-4)))*(1-Math.abs(ca[p-1+39*k]));
+            
 
-            R=scanAdd(c,pl-40*k);
-            def[pl-1-40*k]=(R[0]*R[0]+3*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-40*k]));
-            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-30*k]);
-            R=scanAdd(c,pl+40*k);
-            def[pl-1+40*k]=(R[0]*R[0]+3*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+40*k]));
-            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+40*k]);
+            R=scanAdd(ca,p-40*k);
+            d[p-1-40*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[1]-3+Math.abs(R[1]-3))*(R[1]-3+Math.abs(R[1]-3))+10*(R[1]-4+Math.abs(R[1]-4))*(R[1]-4+Math.abs(R[1]-4)))*(1-Math.abs(ca[p-1-40*k]));
+             R=scanAdd(ca,p+40*k);
+            d[p-1+40*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[1]-3+Math.abs(R[1]-3))*(R[1]-3+Math.abs(R[1]-3))+10*(R[1]-4+Math.abs(R[1]-4))*(R[1]-4+Math.abs(R[1]-4)))*(1-Math.abs(ca[p-1+40*k]));
+            
 
-            R=scanAdd(c,pl-k);
-            def[pl-1-k]=(R[0]*R[0]+R[1]*R[1]+3*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-k]));
-            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-k]);
-            R=scanAdd(c,pl+k);
-            def[pl-1+k]=(R[0]*R[0]+R[1]*R[1]+3*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+k]));
-            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+k]);
+            R=scanAdd(ca,p-k);
+            d[p-1-k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[2]-3+Math.abs(R[2]-3))*(R[2]-3+Math.abs(R[2]-3))+10*(R[2]-4+Math.abs(R[2]-4))*(R[2]-4+Math.abs(R[2]-4)))*(1-Math.abs(ca[p-1-k]));
+            R=scanAdd(ca,p+k);
+            d[p-1+k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[2]-3+Math.abs(R[2]-3))*(R[2]-3+Math.abs(R[2]-3))+10*(R[2]-4+Math.abs(R[2]-4))*(R[2]-4+Math.abs(R[2]-4)))*(1-Math.abs(ca[p-1+k]));
+            
 
-            R=scanAdd(c,pl-38*k);
-            def[pl-1-38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+3*R[3]*R[3])*(1-Math.abs(c[pl-1-38*k]));
-            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-28*k]);
-            R=scanAdd(c,pl+38*k);
-            def[pl-1+38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+3*R[3]*R[3])*(1-Math.abs(c[pl-1+38*k]));
-            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+38*k]);
+            R=scanAdd(ca,p-38*k);
+            d[p-1-38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[3]-3+Math.abs(R[3]-3))*(R[3]-3+Math.abs(R[3]-3))+10*(R[3]-4+Math.abs(R[3]-4))*(R[3]-4+Math.abs(R[3]-4)))*(1-Math.abs(ca[p-1-38*k]));
+            R=scanAdd(ca,p+38*k);
+            d[p-1+38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3]+5*(R[3]-3+Math.abs(R[3]-3))*(R[3]-3+Math.abs(R[3]-3))+10*(R[3]-4+Math.abs(R[3]-4))*(R[3]-4+Math.abs(R[3]-4)))*(1-Math.abs(ca[p-1+38*k]));
+    //        console.log("2k = "+k+"  R = "+R+" ct = "+ct[pl-1+38*k]);
 
-        }return def;
+        }return d;
     }
 
-    var Re=function(c,pl,def){
-        var R;
-        for(k=1;k<=4;k++){      
-            R=scanAdd(c,pl-39*k);
-            def[pl-1-39*k]=def[pl-1-39*k]-2*R[0]*R[0];
-            R=scanAdd(c,pl+39*k);
-            def[pl-1+39*k]=def[pl-1+39*k]-2*R[0]*R[0];
-
-            R=scanAdd(c,pl-40*k);
-            def[pl-1-40*k]=def[pl-1-40*k]-2*R[1]*R[1];
-            R=scanAdd(c,pl+40*k);
-            def[pl-1+40*k]=def[pl-1+40*k]-2*R[1]*R[1];
-
-            R=scanAdd(c,pl-k);
-            def[pl-1-k]=def[pl-1-k]-2*R[2]*R[2];
-            R=scanAdd(c,pl+k);
-            def[pl-1+k]=def[pl-1+k]-2*R[2]*R[2];
-  
-            R=scanAdd(c,pl-38*k);
-            def[pl-1-38*k]=def[pl-1-38*k]-2*R[3]*R[3];
-            R=scanAdd(c,pl+38*k);
-            def[pl-1+38*k]=def[pl-1+38*k]-2*R[3]*R[3];
  
-        }
-    }
 
-    var dec = function(def){
+    var dec = function(d){
         var M,p;
         for(jj=1;jj<=1521;jj++){
-            def[jj-1]=def[jj-1]-400*Math.abs(cb[jj-1]);
+            d[jj-1]=d[jj-1]-1000*Math.abs(cb[jj-1]);
         }
-        M=Math.max.apply(Math,def);
-        p=jQuery.inArray(M,def);
+        M=Math.max.apply(Math,d);
+        p=jQuery.inArray(M,d);
         return p;
     }
-    var win=function(c,pl){
-        var su=1,sul=1,sl=1,sdl=1,cpl=c[pl-1];
+    var win=function(c,p){
+        var su=1,sul=1,sl=1,sdl=1,cpl=c[p-1];
         for(kk=1;kk<=5;kk++){
-            su=su+(cpl*c[pl-39*kk-1]+Math.abs(cpl*c[pl-39*kk-1]))*c[pl-39*kk+38]/2+(cpl*c[pl+39*kk-1]+Math.abs(cpl*c[pl+39*kk-1]))*c[pl+39*kk-40]/2;
-            sul=sul+(cpl*c[pl-40*kk-1]+Math.abs(cpl*c[pl-40*kk-1]))*c[pl-40*kk+39]/2+(cpl*c[pl+40*kk-1]+Math.abs(cpl*c[pl+40*kk-1]))*c[pl+39*kk-41]/2;
-            sl=sl+(cpl*c[pl-kk-1]+Math.abs(cpl*c[pl-kk-1]))*c[pl-kk]/2+(cpl*c[pl+kk-1]+Math.abs(cpl*c[pl+kk-1]))*c[pl+kk-2]/2;
-            sdl=sdl+(cpl*c[pl-38*kk-1]+Math.abs(cpl*c[pl-38*kk-1]))*c[pl-38*kk+37]/2+(cpl*c[pl+38*kk-1]+Math.abs(cpl*c[pl+38*kk-1]))*c[pl+38*kk-39]/2;
+            su=su+(cpl*c[p-39*kk-1]+Math.abs(cpl*c[p-39*kk-1]))*c[p-39*kk+38]/2+(cpl*c[p+39*kk-1]+Math.abs(cpl*c[p+39*kk-1]))*c[p+39*kk-40]/2;
+            sul=sul+(cpl*c[p-40*kk-1]+Math.abs(cpl*c[p-40*kk-1]))*c[p-40*kk+39]/2+(cpl*c[p+40*kk-1]+Math.abs(cpl*c[p+40*kk-1]))*c[p+40*kk-41]/2;
+            sl=sl+(cpl*c[p-kk-1]+Math.abs(cpl*c[p-kk-1]))*c[p-kk]/2+(cpl*c[p+kk-1]+Math.abs(cpl*c[p+kk-1]))*c[p+kk-2]/2;
+            sdl=sdl+(cpl*c[p-38*kk-1]+Math.abs(cpl*c[p-38*kk-1]))*c[p-38*kk+37]/2+(cpl*c[p+38*kk-1]+Math.abs(cpl*c[p+38*kk-1]))*c[p+38*kk-39]/2;
         }
         w=[su,sul,sl,sdl];
         return w;
