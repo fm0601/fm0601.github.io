@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<script type="text/javascript" language="javascript">
+
+google.load("jquery", "1.3");
+
+</script>
+<font size="7" id="text">五子棋</font><br>
+    <img src='棋盤.jpg' id='pic' height='850' width='850' />
+    <style type='text/css'>
+         #text{position:absolute;left:581px;}
+         #pic{position:absolute;top:86px;left:258px;}
+    </style>
+
+    <script type="text/javascript">
+
+    var cb=[],atk=[],def=[],c=[],cw=[],ct=[];
+    for(j=1;j<=39;j++)
+    {
+    for(i=1;i<=39;i++)
+    {
+        atk[i+39*j-39-1]=0;
+        def[i+39*j-39-1]=0;
+        c[i+39*j-39-1]=0;
+        cb[i+39*j-39-1]=-100;
+        cw[i+39*j-39-1]=0;
+        ct[i+39*j-39-1]=0;
+    }}
+    for(jj=11;jj<=29;jj++)
+    {
+    for(ii=11;ii<=29;ii++)
+    {
+        cb[ii+39*jj-39-1]=0;
+        
+    }}
+    var play = function(b,c,cb,def,atk){
+        var id=$(b).attr('id');
+        var l=id.length;
+        var num = id.slice(1,l);
+        var pl=parseInt(num);
+        if(c[pl-1]==0){
+            $(b).css('opacity','1');
+            AI(b,c,cb,def,atk,pl);
+        }
+
+    }
+
+
+
+    var AI = function(b,c,cb,def,atk,pl){
+    
+        cb[pl-1]=1;
+        c[pl-1]=1;
+        cw[pl-1]=-1;
+ 
+       var W=[];
+       W=win(c,pl);
+       if(W[0]==5||W[1]==5||W[2]==5||W[3]==5){
+           document.write('<font size="7" id="textb">五子棋</font><br>');
+           document.write("<input type='image' src='黑贏.jpg' id='picb' height='850' width='850' onclick='location.reload()'/>");
+           document.write("<style type='text/css'>");
+           document.write('#textb{position:absolute;left:581px;}')
+           document.write('#picb{position:absolute;top:86px;left:258px;}')
+           document.write('</style>');
+       }
+
+       def=scan(c,pl,def);
+       for(i=1;i<=1521;i++){
+           ct[i-1]=6*atk[i-1]+def[i-1];
+       }
+
+        var P=dec(ct);
+        atk=scan(cw,P,atk);
+        c[P]=-1;
+        cw[P]=1;
+        cb[P]=-1;
+        $('#w'+(P+1)).css('opacity','1');
+        Re(c,pl,def);
+        Re(cw,P,atk);
+        W=win(cw,P+1);
+       if(W[0]==5||W[1]==5||W[2]==5||W[3]==5){
+           document.write('<font size="7" id="textw">五子棋</font><br>');
+           document.write("<input type='image' src='白贏.jpg' id='picw' height='850' width='850' onclick='location.reload()'/>");
+           document.write("<style type='text/css'>");
+           document.write('#textw{position:absolute;left:581px;}')
+           document.write('#picw{position:absolute;top:86px;left:258px;}')
+           document.write('</style>');
+       }
+        console.log("P = "+P);
+    }
+
+    var scanAdd = function(c,pl){
+        var u=1,l=1,ul=1,dl=1,u1=1,u2=1,l1=1,l2=1,ul1=1,ul2=1,dl1=1,dl2=1;
+        for(i=1;i<=4;i++){
+            u1=(Math.abs(3-(c[pl-39*i+38]+c[pl-39*i-1]+Math.abs(c[pl-39*i+38]+c[pl-39*i-1])))-3)*u1/(-2);
+            u2=(Math.abs(3-(c[pl+39*i-40]+c[pl+39*i-1]+Math.abs(c[pl+39*i-40]+c[pl+39*i-1])))-3)*u2/(-2);
+            u=u+(c[pl-39*i-1]+Math.abs(c[pl-39*i-1]))*u1/2+(c[pl+39*i-1]+Math.abs(c[pl+39*i-1]))*u2/2;
+
+            l1=(Math.abs(3-(c[pl-i-1]+c[pl-i]+Math.abs(c[pl-i-1]+c[pl-i])))-3)*l1/(-2);
+            l2=(Math.abs(3-(c[pl+i-1]+c[pl+i-2]+Math.abs(c[pl+i-1]+c[pl+i-2])))-3)*l2/(-2);
+            l=l+(c[pl-i-1]+Math.abs(c[pl-i-1]))*l1/2+(c[pl+i-1]+Math.abs(c[pl+i-1]))*l2/2;
+
+            ul1=(Math.abs(3-(c[pl-40*i+39]+c[pl-40*i-1]+Math.abs(c[pl-40*i+39]+c[pl-40*i-1])))-3)*ul1/(-2);
+            ul2=(Math.abs(3-(c[pl+40*i-31]+c[pl+40*i-1]+Math.abs(c[pl+40*i-31]+c[pl+40*i-1])))-3)*ul2/(-2);
+            ul=ul+(c[pl-40*i-1]+Math.abs(c[pl-40*i-1]))*ul1/2+(c[pl+40*i-1]+Math.abs(c[pl+40*i-1]))*ul2/2;
+
+            dl1=(Math.abs(3-(c[pl-38*i+37]+c[pl-38*i-1]+Math.abs(c[pl-38*i+37]+c[pl-38*i-1])))-3)*dl1/(-2);
+            dl2=(Math.abs(3-(c[pl+38*i-39]+c[pl+38*i-1]+Math.abs(c[pl+38*i-39]+c[pl+38*i-1])))-3)*dl2/(-2);
+            dl=dl+(c[pl-38*i-1]+Math.abs(c[pl-38*i-1]))*dl1/2+(c[pl+38*i-1]+Math.abs(c[pl+38*i-1]))*dl2/2;
+        }
+        var R=[u,ul,l,dl];
+        return R ;
+    }
+
+    var scan = function(c,pl,def){
+        var R;
+        for(k=1;k<=4;k++){    
+            R=scanAdd(c,pl-39*k);
+            def[pl-1-39*k]=(10*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-39*k]));
+            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-29*k]);
+            R=scanAdd(c,pl+39*k);
+            def[pl-1+39*k]=(10*R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+39*k]));
+            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+39*k]);
+
+            R=scanAdd(c,pl-40*k);
+            def[pl-1-40*k]=(R[0]*R[0]+10*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-40*k]));
+            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-30*k]);
+            R=scanAdd(c,pl+40*k);
+            def[pl-1+40*k]=(R[0]*R[0]+10*R[1]*R[1]+R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+40*k]));
+            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+40*k]);
+
+            R=scanAdd(c,pl-k);
+            def[pl-1-k]=(R[0]*R[0]+R[1]*R[1]+10*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1-k]));
+            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-k]);
+            R=scanAdd(c,pl+k);
+            def[pl-1+k]=(R[0]*R[0]+R[1]*R[1]+10*R[2]*R[2]+R[3]*R[3])*(1-Math.abs(c[pl-1+k]));
+            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+k]);
+
+            R=scanAdd(c,pl-38*k);
+            def[pl-1-38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+10*R[3]*R[3])*(1-Math.abs(c[pl-1-38*k]));
+            console.log("1k = "+k+"  R = "+R+" def = "+def[pl-1-28*k]);
+            R=scanAdd(c,pl+38*k);
+            def[pl-1+38*k]=(R[0]*R[0]+R[1]*R[1]+R[2]*R[2]+10*R[3]*R[3])*(1-Math.abs(c[pl-1+38*k]));
+            console.log("2k = "+k+"  R = "+R+" def = "+def[pl-1+38*k]);
+
+        }return def;
+    }
+
+    var Re=function(c,pl,def){
+        var R;
+        for(k=1;k<=4;k++){      
+            R=scanAdd(c,pl-39*k);
+            def[pl-1-39*k]=def[pl-1-39*k]-9*R[0]*R[0];
+            R=scanAdd(c,pl+39*k);
+            def[pl-1+39*k]=def[pl-1+39*k]-9*R[0]*R[0];
+
+            R=scanAdd(c,pl-40*k);
+            def[pl-1-40*k]=def[pl-1-40*k]-9*R[1]*R[1];
+            R=scanAdd(c,pl+40*k);
+            def[pl-1+40*k]=def[pl-1+40*k]-9*R[1]*R[1];
+
+            R=scanAdd(c,pl-k);
+            def[pl-1-k]=def[pl-1-k]-9*R[2]*R[2];
+            R=scanAdd(c,pl+k);
+            def[pl-1+k]=def[pl-1+k]-9*R[2]*R[2];
+  
+            R=scanAdd(c,pl-38*k);
+            def[pl-1-38*k]=def[pl-1-38*k]-9*R[3]*R[3];
+            R=scanAdd(c,pl+38*k);
+            def[pl-1+38*k]=def[pl-1+38*k]-9*R[3]*R[3];
+ 
+        }
+    }
+
+    var dec = function(def){
+        var M,p;
+        for(jj=1;jj<=1521;jj++){
+            def[jj-1]=def[jj-1]-400*Math.abs(cb[jj-1]);
+        }
+        M=Math.max.apply(Math,def);
+        p=jQuery.inArray(M,def);
+        return p;
+    }
+    var win=function(c,pl){
+        var su=1,sul=1,sl=1,sdl=1,cpl=c[pl-1];
+        for(kk=1;kk<=5;kk++){
+            su=su+(cpl*c[pl-39*kk-1]+Math.abs(cpl*c[pl-39*kk-1]))*c[pl-39*kk+38]/2+(cpl*c[pl+39*kk-1]+Math.abs(cpl*c[pl+39*kk-1]))*c[pl+39*kk-40]/2;
+            sul=sul+(cpl*c[pl-40*kk-1]+Math.abs(cpl*c[pl-40*kk-1]))*c[pl-40*kk+39]/2+(cpl*c[pl+40*kk-1]+Math.abs(cpl*c[pl+40*kk-1]))*c[pl+39*kk-41]/2;
+            sl=sl+(cpl*c[pl-kk-1]+Math.abs(cpl*c[pl-kk-1]))*c[pl-kk]/2+(cpl*c[pl+kk-1]+Math.abs(cpl*c[pl+kk-1]))*c[pl+kk-2]/2;
+            sdl=sdl+(cpl*c[pl-38*kk-1]+Math.abs(cpl*c[pl-38*kk-1]))*c[pl-38*kk+37]/2+(cpl*c[pl+38*kk-1]+Math.abs(cpl*c[pl+38*kk-1]))*c[pl+39*kk-39]/2;
+        }
+        w=[su,sul,sl,sdl];
+        return w;
+    }
+
+    
+
+    for(j=1;j<=19;j++)
+    {
+    for(i=1;i<=19;i++)
+    {
+        document.write("<img src='w.png' id='w"+(i+39*j+361)+"' height='43' width='43' />");
+        document.write("<input type='image' src='b.png' id='b"+(i+39*j+361)+"'class='btn' height='43' width='43' onclick='play(b"+(i+39*j+361)+",c,cb,def,atk);'/>");
+        document.write("<style type='text/css'>")
+        document.write("#b"+(i+39*j+361)+"{position:absolute; top:"+(43*j+55)+"px; left:"+(43*i+229)+"px;opacity:0;}")
+        document.write("#b"+(i+39*j+361)+":hover {opacity:0.5;}")
+        document.write("#w"+(i+39*j+361)+"{position:absolute; top:"+(43*j+55)+"px; left:"+(43*i+229)+"px;opacity:0;}")
+        document.write("</style >")
+    }
+    document.write("<br>");
+    }
+
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
