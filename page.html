@@ -6,6 +6,10 @@
     <meta charset="utf-8" />
 </head>
 <body>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">Snap Photo</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
     <script type="text/javascript" language="javascript">
@@ -14,18 +18,17 @@ google.load("jquery", "1.3");
 
     <script type="text/javascript">
 
-    // Not showing vendor prefixes.
-    navigator.getUserMedia({ video: true, audio: true }, function (localMediaStream) {
-    var video = document.querySelector('video');
-    video.src = window.URL.createObjectURL(localMediaStream);
+        // Grab elements, create settings, etc.
+        var video = document.getElementById('video');
 
-    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-    // See crbug.com/110938.
-    video.onloadedmetadata = function (e) {
-    // Ready to go. Do some stuff.
-    };
-    }, errorCallback);
-    };
+        // Get access to the camera!
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Not adding `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                video.src = window.URL.createObjectURL(stream);
+                video.play();
+            });
+        }
     </script>
 </body>
 </html>
