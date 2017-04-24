@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
 </head>
 <body>
-    <video id="video" width="640" height="480" autoplay></video>
+    <video id="video" autoplay></video>
     <button id="snap">Snap Photo</button>
     <canvas id="canvas" width="640" height="480"></canvas>
 
@@ -25,5 +25,11 @@
         })
         .catch(function (err) { console.log(err.name + ": " + err.message); });
     </script>
+    <style>
+        video{
+            height:100%;
+            width:100%;
+        }
+    </style>
 </body>
 </html>
