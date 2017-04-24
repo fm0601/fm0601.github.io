@@ -7,7 +7,7 @@
 </head>
 <body>
     <video id="video" autoplay></video>
-    <button id="snap">12</button>
+    <button class="button snap">snap</button>
     <canvas id="canvas" width="0" height="0"></canvas>
 
     <script>
@@ -26,20 +26,19 @@
         .catch(function (err) { console.log(err.name + ": " + err.message); });
     </script>
     <style>
+
         video{
             position:fixed;
-            top:0 px;
-            left:0px;
+            top:0 ;
+            left:0;
             height: 100%;
             width: 100%;
             margin: 0;
-            z-index:1;
         }
-        snap{
-            position:absolute;
-            top:20px;
-            left:20px;
-            z-index:2;
+        .snap {
+            position:fixed;
+            bottom:10%;
+            left:50%
         }
     </style>
 </body>
