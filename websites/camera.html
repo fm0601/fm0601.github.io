@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <video id="video" autoplay></video>
+
+    <canvas id="canvas" width="0" height="0"></canvas>
+    <a href="page2.html">
+        <img src="smiley.gif" alt="take a photo" class="button snap" >
+    </a>
+    <script>
+
+        // Prefer camera resolution nearest to 1280x720.
+        var constraints = { audio: true, video: { width: 640, height: 480 } };
+
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(function (mediaStream) {
+            var video = document.querySelector('video');
+            video.srcObject = mediaStream;
+            video.onloadedmetadata = function (e) {
+                video.play();
+            };
+        })
+        .catch(function (err) { console.log(err.name + ": " + err.message); });
+    </script>
+    <style>
+
+        video{
+            position:fixed;
+            top:0;
+            left:0;
+            height: 100%;
+            width: auto;
+            margin: 0;
+        }
+        .snap {
+            position:fixed;
+            height:6%;
+            width:auto;
+            bottom:10%;
+            left:46%
+        }
+
+    </style>
+</body>
+</html>
