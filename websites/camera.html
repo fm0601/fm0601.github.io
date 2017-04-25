@@ -7,15 +7,15 @@
 </head>
 <body>
     <video id="video" autoplay></video>
+    <canvas id="canvas"></canvas>
+    <img src="takePhoto.gif" id="snap" alt="take a photo" >
 
-    <canvas id="canvas" width="0" height="0"></canvas>
-    <a href="page2.html">
-        <img src="smiley.gif" alt="take a photo" class="button snap" >
-    </a>
     <script>
-
+        var canvas = document.getElementById('canvas');
+        canvas.height=window.innerHeight
+        canvas.width = window.innerWidth;
         // Prefer camera resolution nearest to 1280x720.
-        var constraints = { audio: true, video: { width: 640, height: 480 } };
+        var constraints = { audio: true, video: true };
 
         navigator.mediaDevices.getUserMedia(constraints)
         .then(function (mediaStream) {
@@ -26,6 +26,18 @@
             };
         })
         .catch(function (err) { console.log(err.name + ": " + err.message); });
+
+        // Elements for taking the snapshot
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var video = document.getElementById('video');
+
+        // Trigger photo take
+        document.getElementById("snap").addEventListener("click", function () {
+            context.drawImage(video, 0, 0,window.innerWidth,window.innerHeight);
+            video.style.opacity = 0.2;
+        });
+
     </script>
     <style>
 
@@ -37,12 +49,17 @@
             width: auto;
             margin: 0;
         }
-        .snap {
+        #snap {
             position:fixed;
             height:6%;
             width:auto;
             bottom:10%;
             left:46%
+        }
+        #canvas{
+            position:fixed;
+            height: 100%;
+            width: auto;
         }
 
     </style>
