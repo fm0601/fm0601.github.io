@@ -15,7 +15,7 @@
         canvas.height = window.innerHeight;
         canvas.width = window.innerWidth;
         // Prefer camera resolution nearest to 1280x720.
-        var constraints = { audio: true, video: true };
+        var constraints = { audio: true, video: { width: window.innerWidth, height: window.innerHeight } };
 
         navigator.mediaDevices.getUserMedia(constraints)
         .then(function (mediaStream) {
