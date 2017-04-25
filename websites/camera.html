@@ -34,7 +34,7 @@
 
         // Trigger photo take
         document.getElementById("snap").addEventListener("click", function () {
-            context.drawImage(video, 0, 0,window.innerWidth,window.innerHeight);
+            context.drawImage(video, 0, 0,window.innerWidth,window.innerHeight, 0, 0,window.innerWidth,window.innerHeight);
             video.style.opacity = 0.2;
         });
 
@@ -56,11 +56,7 @@
             right:10%;
             top:46%
         }
-        #canvas{
-            position:fixed;
-            height: auto;
-            width: 100%;
-        }
+
 
     </style>
 </body>
