@@ -8,7 +8,9 @@
 <body>
     <video id="video" autoplay></video>
     <canvas id="canvas"></canvas>
-    <img src="takePhoto.gif" id="snap" alt="take a photo" >
+    <img src="../image/takePhoto.gif" id="snap" alt="take a photo" >
+
+    <iframe src="./selectStyle/recommend.html" height="0" id="style" scrolling="no" frameborder="0"></iframe>
 
     <script>
         var canvas = document.getElementById('canvas');
@@ -31,11 +33,16 @@
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
         var video = document.getElementById('video');
+        var snap = document.getElementById('snap');
+        var style = document.getElementById('style');
 
         // Trigger photo take
         document.getElementById("snap").addEventListener("click", function () {
             context.drawImage(video, 0, 0, window.innerWidth, window.innerHeight);
             video.style.opacity = 0.2;
+            snap.style.opacity = 0;
+            style.height = 0.25*window.innerHeight;
+
         });
 
     </script>
@@ -62,6 +69,12 @@
             left:0;
             margin:0;
         }
+        #style{
+            position:absolute;
+            top:75%;
+            width:100%;
+        }
+
     </style>
 </body>
 </html>
