@@ -12,11 +12,17 @@
     
     
     <a href="artist/Edvard_Mund/intro.html">
-        <img src="../../image/Edvard_Mund.jpg" id="mund" />
+        <img src="../../image/Edvard_Mund.jpg" id="mund" onclick="clicked()"/>
     </a>
     <a href="artist/Millet/intro.html">
-        <img src="../../image/Millet.jpg" id="millet" />
+        <img src="../../image/Millet.jpg" id="millet" onclick="clicked()"/>
     </a>
+    <script>
+        function clicked() {
+            window.parent.document.getElementById('recommend').height = '100%';
+        }
+    </script>
+    
 
     <style>
         #recommend{
@@ -47,6 +53,7 @@
             height:90%;
             width:30%;
         }
+        
 
     </style>
 
