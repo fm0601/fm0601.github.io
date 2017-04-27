@@ -25,7 +25,7 @@
                 reader.onload = function (e) {
                     $('#image')
                         .attr('src', e.target.result)
-
+                    window.parent.document.getElementById('recommend').height = '500px';
                     image.style.opacity = 1;
                 };
 
@@ -48,9 +48,12 @@
 
         #image {
             position: fixed;
+            top:0px;
+            left:0px;
             height: 100%;
             width: 100%;
             opacity: 0.5;
+            
         }
     </style>
 </body>
