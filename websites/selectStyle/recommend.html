@@ -3,20 +3,63 @@
 <head>
 </head>
 <body>
-    <img src="../../image/text_recommend.jpg" id="recommend" />
+    <ul>
+        <li><a href="recommend.html">推薦</a></li>
+        <li><a href="artist.html">畫家</a></li>
 
-    <a href="artist.html">
-        <img src="../../image/text_artist.jpg" id="artists" />
-    </a>
+    </ul>
 
-    <img src="../../image/the_scream.jpg" id="scream" />
+
+    <img src="../../image/the_scream.jpg" id="scream" onclick=""/>
     <img src="../../image/the_gleaners.jpg" id="gleaners" />
 
     <script>
-
-
+        
+/*
+        document.getElementById("scream").addEventListener("click", function () {
+         //         var snap = parent.document.getElementById("snap");
+            var scream = document.getElementById("scream");
+            scream.style.opacity = 0.5;
+            
+        //           snap.style.opacity = 1;
+        });
+        */
     </script>
     <style>
+        body {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 14%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+        a{
+            writing-mode:vertical-lr;
+        }
         #recommend{
             position:absolute;
             top:0;
@@ -45,6 +88,7 @@
             height:90%;
             width:30%;
         }
+        
 
     </style>
 
