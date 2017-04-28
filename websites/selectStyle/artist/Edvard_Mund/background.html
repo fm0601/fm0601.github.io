@@ -5,15 +5,55 @@
     <title></title>
 </head>
 <body>
-    <p id="intro" onclick="update(this.id)">介紹</p>
+    <ul>
+        <li><a id="intro" onclick="update(this.id)" style="display:inline">介紹</a></li>
+        <li><a id="paintings" onclick="update(this.id)" style="display:inline">畫作</a></li>
+        <li><a id="others" onclick="update(this.id)" style="display:inline">其他</a></li>
+    </ul>
+    
+    
+    
     <iframe src="intro.html" id="page"></iframe>
 
     <script>
         function update(button_id) {
             var butt = document.getElementById(button_id);
-            window.frames[0].location = button_id + ".thml";
+            window.frames[0].location = button_id + ".html";
             console.log(button_id + ".html");
         }
     </script>
+    <style>
+        ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+        #page{
+            position:fixed;
+            top:14px;
+            left:0px;
+            height:90%;
+            width:100%;
+            border:none;
+        }
+    </style>
 </body>
 </html>
