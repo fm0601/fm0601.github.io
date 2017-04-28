@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <p id="intro" onclick="update(this.id)">介紹</p>
+    <iframe src="intro.html" id="page"></iframe>
+
+    <script>
+        function update(button_id) {
+            var butt = document.getElementById(button_id);
+            window.frames[0].location = button_id + ".thml";
+            console.log(button_id + ".thml");
+        }
+    </script>
+</body>
+</html>
