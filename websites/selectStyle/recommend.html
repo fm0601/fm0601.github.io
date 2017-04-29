@@ -4,8 +4,8 @@
 </head>
 <body>
     <ul>
-        <li><a href="recommend.html">推薦</a></li>
-        <li><a href="artist.html">畫家</a></li>
+        <li><a href="recommend.html" id="rec">推薦</a></li>
+        <li><a href="artist.html" id="art">畫家</a></li>
 
     </ul>
 
@@ -44,7 +44,6 @@ ul {
 li a {
     display: block;
     color: #000;
-    padding: 8px 16px;
     text-decoration: none;
 }
 
@@ -59,6 +58,17 @@ li a:hover:not(.active) {
 }
         a{
             writing-mode:vertical-lr;
+        }
+        #rec{
+            position:fixed;
+            height:50%;
+            width:14%;
+        }
+        #art{
+            position:fixed;
+            top:50%;
+            height:50%;
+            width:14%;
         }
         #recommend{
             position:absolute;

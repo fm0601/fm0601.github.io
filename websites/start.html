@@ -12,12 +12,14 @@
     
 </head>
 <body>
+    <img src="../image/deepart.jpg" id="deepart" />
     <img id="image" src="#" alt="your image" />
     <input type='file' onchange="readURL(this);" id="camera" accept="image/*;capture=camera" />
     
     
     <script>
         var image = document.getElementById("image");
+        var deepart=document.getElementById("deepart")
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -27,6 +29,8 @@
                         .attr('src', e.target.result)
                     window.parent.document.getElementById('recommend').height = '25%';
                     image.style.opacity = 1;
+                    deepart.style.opacity = 0;
+                    
                 };
 
                 reader.readAsDataURL(input.files[0]);
@@ -38,7 +42,13 @@
         menu, nav, section {
             display: block;
         }
-
+        #deepart{
+            position:fixed;
+            top:0px;
+            left:0px;
+            height:100%;
+            width:100%;
+        }
         #camera {
             position:fixed;
             height: 100%;
@@ -52,7 +62,7 @@
             left:0px;
             height: 100%;
             width: 100%;
-            opacity: 0.5;
+            opacity: 0;
             
         }
     </style>
