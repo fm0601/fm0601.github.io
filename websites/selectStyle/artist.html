@@ -11,13 +11,13 @@
     <img src="../../image/text_artist.jpg" id="artists" />
     
     
-        <img src="../../image/Edvard_Mund.jpg" id="mund" onclick="clicked()"/>
+        <img src="../../image/Edvard_Mund.jpg" id="Edvard_Mund" onclick="clicked(this.id)"/>
 
-        <img src="../../image/Millet.jpg" id="millet" onclick="clicked()"/>
+        <img src="../../image/Millet.jpg" id="Millet" onclick="clicked()"/>
     <script>
-        function clicked() {
+        function clicked(artist_name) {
             window.parent.document.getElementById('recommend').height = '0';
-            window.parent.document.getElementById('camera').location = './Millet/background.html';
+            window.parent.document.getElementById('camera').location = './'+artist_name+'/background.html';
         }
     </script>
     
@@ -37,14 +37,14 @@
             height:50%;
             width:14%;
         }
-        #mund {
+        #Edvard_Mund {
             position:absolute;
             top:5%;
             left:16%;
             height:90%;
             width:30%;
         }
-        #millet {
+        #Millet {
             position:absolute;
             top:5%;
             left:48%;
