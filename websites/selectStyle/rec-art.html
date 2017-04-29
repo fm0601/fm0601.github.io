@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <ul>
+        <li><a id="recommend" onclick="select(this.id)">推薦</a></li>
+        <li><a id="artist" onclick="select(this.id)">畫家</a></li>
+
+    </ul>
+
+    <script>
+        function select(l) {
+            window.parent.document.getElementById("styles").innerHTML = "<iframe src='" + l + ".html' ></iframe>";
+        }
+    </script>
+
+    <style>
+
+        body {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li a {
+    display: block;
+    color: #000;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+        a{
+            writing-mode:vertical-lr;
+        }
+        #recommend{
+            position:fixed;
+            height:50%;
+            width:100%;
+        }
+        #artist{
+            position:fixed;
+            top:50%;
+            height:50%;
+            width:100%;
+        }
+    </style>
+</body>
+</html>
