@@ -1,0 +1,1 @@
+/Users/psquare/Downloads/BetaBuilder.app/Contents/Resources/README
