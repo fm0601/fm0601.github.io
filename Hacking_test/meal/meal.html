@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<style>
+	#block{
+		background-color: lightblue;
+		height:50px;
+		width:250px;
+		position:relative;
+		top:100px;
+		left:500px;
+	}
+	#button{
+		background-color: blue;
+		height:20px;
+		width:70px;
+		position:relative;
+		top:100px;
+		left:590px;
+	}
+	</style>
+</head>
+<body>
+    <div id="block">hi</div>
+	<div id="button">click</div>
+	
+	<script>
+	fetch('restaurants.txt')
+  .then(response => response.text())
+  .then(text => console.log(text))
+	</script>
+	
+</body>
+</html>
