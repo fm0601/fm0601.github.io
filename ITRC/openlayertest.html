@@ -27,6 +27,21 @@
           zoom: 4
         })
       });
+
+      var osm = new OpenLayers.Layer.OSM();
+
+var graphic = new OpenLayers.Layer.Image(
+    'Image',
+    'https://fm0601.github.io/ITRC/tms-C4.png',
+    new OpenLayers.Bounds(27.418100,35.771100,28.388000,36.558500),
+    new OpenLayers.Size(800,255),
+    {numZoomLevels: 3}
+);
+
+map.addControl(new OpenLayers.Control.LayerSwitcher());
+map.addLayers([osm, graphic]);
+map.zoomToExtent(new OpenLayers.Bounds(27.418100,35.771100,28.388000,36.558500));
+
     </script>
   </body>
 </html>
