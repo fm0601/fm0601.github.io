@@ -15,10 +15,24 @@
     <h2>My Map</h2>
     <div id="map" class="map"></div>
     <script type="text/javascript">
+
       import Map from 'ol/Map.js';
       import View from 'ol/View.js';
       import TileLayer from 'ol/layer/Tile.js';
       import {OSM, TileArcGISRest} from 'ol/source.js';
+
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([37.41, 8.82]),
+          zoom: 4
+        })
+      });
 
       var url = 'https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/' +
           'Specialty/ESRI_StateCityHighway_USA/MapServer';
