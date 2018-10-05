@@ -28,19 +28,15 @@
         })
       });
 
-      var osm = new OpenLayers.Layer.OSM();
+      var image = new OpenLayers.Layer.Image(
+      'Image 1',
+      'https://fm0601.github.io/ITRC/tms-C4.png',
+      //new OpenLayers.Bounds(27.418100,35.771100,28.388000,36.558500),
+      new OpenLayers.Size(800,255),
+      {isBaseLayer: false}
+      );
 
-var graphic = new OpenLayers.Layer.Image(
-    'Image',
-    'https://fm0601.github.io/ITRC/tms-C4.png',
-    new OpenLayers.Bounds(27.418100,35.771100,28.388000,36.558500),
-    new OpenLayers.Size(800,255),
-    {numZoomLevels: 3}
-);
-
-map.addControl(new OpenLayers.Control.LayerSwitcher());
-map.addLayers([osm, graphic]);
-map.zoomToExtent(new OpenLayers.Bounds(27.418100,35.771100,28.388000,36.558500));
+      map.addLayer(image);
 
     </script>
   </body>
