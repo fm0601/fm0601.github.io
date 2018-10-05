@@ -1,43 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/css/ol.css" type="text/css">
-    <style>
-      .map {
-        height: 400px;
-        width: 100%;
-      }
-    </style>
-    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
-    <title>OpenLayers example</title>
+    <title>Tiled ArcGIS MapServer</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v5.2.0/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+
   </head>
   <body>
-    <h2>My Map</h2>
     <div id="map" class="map"></div>
-    <script type="text/javascript">
-      var map = new ol.Map({
-        target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
+    <script>
+      import Map from 'ol/Map.js';
+      import View from 'ol/View.js';
+      import TileLayer from 'ol/layer/Tile.js';
+      import {OSM, TileArcGISRest} from 'ol/source.js';
+
+      var url = 'https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/' +
+          'Specialty/ESRI_StateCityHighway_USA/MapServer';
+
+      var layers = [
+        new TileLayer({
+          source: new OSM()
+        }),
+        new TileLayer({
+          extent: [-13884991, 2870341, -7455066, 6338219],
+          source: new TileArcGISRest({
+            url: url
           })
-        ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([37.41, 8.82]),
+        })
+      ];
+      var map = new Map({
+        layers: layers,
+        target: 'map',
+        view: new View({
+          center: [-10997148, 4569099],
           zoom: 4
         })
       });
-
-      var image = new OpenLayers.Layer.Image(
-      'Image 1',
-      'https://fm0601.github.io/ITRC/tms-C4.png',
-      new OpenLayers.Bounds(-180,-90,180,90),
-      new OpenLayers.Size(80000,25500),
-      {isBaseLayer: false}
-      );
-
-      map.addLayer(image);
-
     </script>
   </body>
 </html>
