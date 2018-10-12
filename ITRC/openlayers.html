@@ -8,8 +8,8 @@
 <style type="text/css">
 html, body { margin:0; padding: 0; height: 100%; width: 100%; }
 body { width:100%; height:100%; background: #ffffff; }
-#map { position: absolute; top:10%; height: 100%; width: 100%; }
-#slider { position: absolute; top: 10px; right: 10px; }
+#map { position: absolute; top:5%;bottom:5%; height: 90%; width: 100%; }
+#addpt { position: absolute; bottom: 0px; width: 100%; }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css" type="text/css">
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,fetch,Function.prototype.bind,es5&flags=always,gated&unknown=polyfill" type="text/javascript"></script>
@@ -18,13 +18,12 @@ body { width:100%; height:100%; background: #ffffff; }
 <body>
 <div id="map"></div>
 <div id="bar">
+    <button onclick="downloadCSV()">save</button>
     <input type="file" id="infile" onchange="handleFiles(this.files)"
             accept=".csv">
-    <button onclick="downloadCSV()">save</button>
-    Name: <input type="text" id="buildingName" value="name">
-    Floor: <input type="text" id="floor" value="1F">
-    <input type="checkbox" id="cb" checked="true">Add points
-  </div>
+    <button id='addpt' onclick="addpt()">Add point</button>
+</div>
+  <div id="overlay" style="background-color: blue; border-radius: 10px; border: 0px; padding: 5px 10px;">
 <script type="text/javascript">
 var mapExtent = ol.proj.transformExtent([121.516041, 25.046791, 121.518175, 25.048600], 'EPSG:4326', 'EPSG:3857');
 var mapMinZoom = 17;
@@ -58,6 +57,11 @@ var map = new ol.Map({
 });
 
 
+var overlay = new ol.Overlay({
+  element: document.getElementById('overlay'),
+  positioning: 'center-center'
+});
+
 var Tnode = [];
 var Tline = [];
 var startId;
@@ -68,17 +72,33 @@ var pointnum=0;
 var linenum=0;
 var inodenum=0;
 var isEnd = false;
+
+var ptlng;
+var ptlat;
 map.on('click', function(evt){
-  var coords = ol.proj.toLonLat(evt.coordinate);
-  var lat = coords[1];
-  var lng = coords[0];
+	var coords = ol.proj.toLonLat(evt.coordinate);
+	var lat = coords[1];
+	var lng = coords[0];
   
-	Tnode.push([pointnum, lng, lat, floor.value, 'TRAINING_NODE', floor.value, buildingName.value, floor.value, floor.value, 'TRUE']);
+    var coord = evt.coordinate;
+	var element = overlay.getElement();
+    //element.innerHTML = "here";
+	overlay.setPosition(coord);
+	map.addOverlay(overlay);
+  
+	Tnode.push([pointnum, lng, lat, '1F', 'TRAINING_NODE', '1F', 'name', '1F', '1F', 'TRUE']);
 	Tline.push([pointnum])
-	addpoint([lng, lat]);
+	//addpoint([lng, lat]);
+	ptlng=lng;
+	ptlat=lat;
+	
 	pointnum = pointnum+1;
     
 });
+
+function addpt(){
+	addpoint([ptlng, ptlat]);
+}
 
 var link = document.createElement("a");
 function downloadCSV(){
@@ -115,7 +135,7 @@ function downloadCSV(){
   }); 
   var encodedUri = encodeURI(csvContent);
   link.setAttribute("href", encodedUri);
-  link.setAttribute("download", buildingName.value+"_"+floor.value+".csv");
+  link.setAttribute("download", 'name'+"_"+'1F'+".csv");
   link.style.visibility = 'hidden';
   document.body.appendChild(link); // Required for FF
   link.click(); // This will download the data file named "my_data.csv".
@@ -209,7 +229,7 @@ function addpoint(coord){
           image: new ol.style.Circle({
             radius: 10,
             snapToPixel: false,
-            fill: new ol.style.Fill({color: '#00ff00'})
+            fill: new ol.style.Fill({color: '#ff0000'})
           })
         })
     });
@@ -217,7 +237,7 @@ function addpoint(coord){
 }
 
 function id2name(TorI, id){
-  return TorI+floor.value+'-'+id
+  return TorI+'1F'+'-'+id
 }
 
 
