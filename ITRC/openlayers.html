@@ -8,7 +8,7 @@
 <style type="text/css">
 html, body { margin:0; padding: 0; height: 100%; width: 100%; }
 body { width:100%; height:100%; background: #ffffff; }
-#map { position: absolute; top:5%; height: 100%; width: 100%; }
+#map { position: absolute; top:10%; height: 100%; width: 100%; }
 #slider { position: absolute; top: 10px; right: 10px; }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css" type="text/css">
@@ -25,7 +25,6 @@ body { width:100%; height:100%; background: #ffffff; }
             accept=".csv">
     <button onclick="downloadCSV()">save</button>
   </div>
-<input id="slider" type="range" min="0" max="1" step="0.1" value="1" oninput="layer.setOpacity(this.value)">
 <script type="text/javascript">
 var mapExtent = ol.proj.transformExtent([121.516041, 25.046791, 121.518175, 25.048600], 'EPSG:4326', 'EPSG:3857');
 var mapMinZoom = 17;
