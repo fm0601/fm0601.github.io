@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>B1map</title>
+<title>TP</title>
 <meta http-equiv="imagetoolbar" content="no"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style type="text/css">
 html, body { margin:0; padding: 0; height: 100%; width: 100%; }
 body { width:100%; height:100%; background: #ffffff; }
-#map { position: absolute; height: 100%; width: 100%; }
+#map { position: absolute; top:5%; height: 100%; width: 100%; }
 #slider { position: absolute; top: 10px; right: 10px; }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css" type="text/css">
@@ -16,234 +16,212 @@ body { width:100%; height:100%; background: #ffffff; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.js" type="text/javascript"></script>
 </head>
 <body>
-<div id="map" class="smallmap olMap"></div>
+<div id="map"></div>
+<div id="bar">
+    Name: <input type="text" id="buildingName" value="name">
+    Floor: <input type="text" id="floor" value="1F">
+    <input type="checkbox" id="cb" checked="true">Add points
+    <input type="file" id="infile" onchange="handleFiles(this.files)"
+            accept=".csv">
+    <button onclick="downloadCSV()">save</button>
+  </div>
 <input id="slider" type="range" min="0" max="1" step="0.1" value="1" oninput="layer.setOpacity(this.value)">
 <script type="text/javascript">
-var mapExtentB11 = ol.proj.transformExtent([121.513621, 25.046680, 121.519774, 25.048712], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 15;
-var mapMaxZoom = 20;
-var layerB11 = new ol.layer.Tile({
-  extent: mapExtentB11,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B11; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B11/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB14 = ol.proj.transformExtent([121.514540, 25.046230, 121.517784, 25.047356], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 16;
-var mapMaxZoom = 21;
-var layerB14 = new ol.layer.Tile({
-  extent: mapExtentB14,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B14; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B14/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB17 = ol.proj.transformExtent([121.518370, 25.047790, 121.520412, 25.051763], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 16;
-var mapMaxZoom = 21;
-var layerB17 = new ol.layer.Tile({
-  extent: mapExtentB17,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B17; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B17/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB18 = ol.proj.transformExtent([121.519990, 25.051095, 121.521036, 25.058275], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 15;
-var mapMaxZoom = 21;
-var layerB18 = new ol.layer.Tile({
-  extent: mapExtentB18,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B18; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B18/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB12 = ol.proj.transformExtent([121.502601, 25.047831, 121.527195, 25.050431], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 13;
+var mapExtent = ol.proj.transformExtent([121.516041, 25.046791, 121.518175, 25.048600], 'EPSG:4326', 'EPSG:3857');
+var mapMinZoom = 17;
 var mapMaxZoom = 19;
-var layerB12 = new ol.layer.Tile({
-  extent: mapExtentB12,
+var layer = new ol.layer.Tile({
+  extent: mapExtent,
   source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B12; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B12/{z}/{x}/{y}.png",
+    attributions: [new ol.Attribution({html: 'TP; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
+    url: "{z}/{x}/{y}.png",
     tilePixelRatio: 1.000000,
     minZoom: mapMinZoom,
     maxZoom: mapMaxZoom
   })
 });
-
-var mapExtentB15 = ol.proj.transformExtent([121.511590, 25.046300, 121.517674, 25.047433], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 15;
-var mapMaxZoom = 20;
-var layerB15 = new ol.layer.Tile({
-  extent: mapExtentB15,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B15; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B15/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB110 = ol.proj.transformExtent([121.517650, 25.048650, 121.519148, 25.049424], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 17;
-var mapMaxZoom = 20;
-var layerB110 = new ol.layer.Tile({
-  extent: mapExtentB110,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B110; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B110/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB19 = ol.proj.transformExtent([121.510060, 25.048600, 121.512088, 25.050011], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 17;
-var mapMaxZoom = 21;
-var layerB19 = new ol.layer.Tile({
-  extent: mapExtentB19,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B19; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B19/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB16 = ol.proj.transformExtent([121.516090, 25.045850, 121.518607, 25.047132], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 17;
-var mapMaxZoom = 21;
-var layerB16 = new ol.layer.Tile({
-  extent: mapExtentB16,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B16; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B16/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentB13 = ol.proj.transformExtent([121.510405, 25.048160, 121.516034, 25.049649], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 15;
-var mapMaxZoom = 19;
-var layerB13 = new ol.layer.Tile({
-  extent: mapExtentB13,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'B13; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "B13/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentC1 = ol.proj.transformExtent([121.509357, 25.050016, 121.511121, 25.050425], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 17;
-var mapMaxZoom = 20;
-var layerC1 = new ol.layer.Tile({
-  extent: mapExtentC1,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'C1; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "C1/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtentC3 = ol.proj.transformExtent([121.518340, 25.048208, 121.519779, 25.048596], 'EPSG:4326', 'EPSG:3857');
-var mapMinZoom = 17;
-var mapMaxZoom = 20;
-var layerC3 = new ol.layer.Tile({
-  extent: mapExtentC3,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'C3; Rendered with <a href="https://www.maptiler.com/">MapTiler</a>'})],
-    url: "C3/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
 var osm = new ol.layer.Tile({
-  source: new ol.source.OSM()
+  source: new ol.source.OSM({
+        "url" : "http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+    })
 });
 
 var map = new ol.Map({
   target: 'map',
   layers: [
     osm,
-    layerB11,
-    layerB14,
-    layerB17,
-    layerB18,
-    layerB12,
-    layerB15,
-    layerB110,
-    layerB19,
-    layerB16,
-    layerB13,
-    layerC1,
-    layerC3
+    layer
   ],
   view: new ol.View({
-    center: ol.proj.fromLonLat([121.516697, 25.047696]),
-    zoom: 16
+    center: ol.proj.fromLonLat([121.517108, 25.047695]),
+    zoom: 18
   })
 });
 
-OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
-                defaultHandlerOptions: {
-                    'single': true,
-                    'double': false,
-                    'pixelTolerance': 0,
-                    'stopSingle': false,
-                    'stopDouble': false
-                },
 
-                initialize: function(options) {
-                    this.handlerOptions = OpenLayers.Util.extend(
-                        {}, this.defaultHandlerOptions
-                    );
-                    OpenLayers.Control.prototype.initialize.apply(
-                        this, arguments
-                    ); 
-                    this.handler = new OpenLayers.Handler.Click(
-                        this, {
-                            'click': this.trigger
-                        }, this.handlerOptions
-                    );
-                }, 
+var Tnode = [];
+var Tline = [];
+var startId;
+var sindx;
+var endId;
+var eindx;
+var pointnum=0;
+var linenum=0;
+var inodenum=0;
+var isEnd = false;
+map.on('click', function(evt){
+  var coords = ol.proj.toLonLat(evt.coordinate);
+  var lat = coords[1];
+  var lng = coords[0];
+  
+	Tnode.push([pointnum, lng, lat, floor.value, 'TRAINING_NODE', floor.value, buildingName.value, floor.value, floor.value, 'TRUE']);
+	Tline.push([pointnum])
+	addpoint([lng, lat]);
+	pointnum = pointnum+1;
+    
+});
 
-                trigger: function(e) {
-                    var lonlat = map.getLonLatFromPixel(e.xy);
-                    alert("You clicked near " + lonlat.lat + " N, " +
-                                              + lonlat.lon + " E");
-                }
+var link = document.createElement("a");
+function downloadCSV(){
+  var tmp = [];
+  Inode = [];
+  for(var i=0;i<=Tnode.length-1;i++){
+    tmp.push(Tnode[i].slice());
+  }
+  for(var i=0; i<=tmp.length-1;i++){
+    tmp[i].push(Tline[i].length-1);
+    for(j=1;j<=Tline[i].length-1;j++){
+      tmp[i].push(Tline[i][j][0]);
+    }
+    tmp[i].push(2*(Tline[i].length-1));
+    for(j=1;j<=Tline[i].length-1;j++){
+      var endpoint = Tline[i][j][1];
+      tmp[i].push(id2name('T', tmp[i][0])+'_'+id2name('T', endpoint));
+      tmp[i].push(id2name('T', endpoint)+'_'+id2name('T', tmp[i][0]));
+    }
+    tmp[i].push(Tline[i].length-1);
+  }
 
-            });
+  for(var i=0;i<=Tnode.length-1;i++){
+    tmp[i][0] = id2name('T',tmp[i][0]);
+  }
+  for(var i=0;i<=Inode.length-1;i++){
+    tmp.push(Inode[i]);
+  }
+
+  let csvContent = "data:text/csv;charset=utf-8,";
+  tmp.forEach(function(rowArray){
+     let row = rowArray.join(",");
+     csvContent += row + "\r\n";
+  }); 
+  var encodedUri = encodeURI(csvContent);
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", buildingName.value+"_"+floor.value+".csv");
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link); // Required for FF
+  link.click(); // This will download the data file named "my_data.csv".
+}
+
+function handleFiles(files) {
+  // Check for the various File API support.
+  if (window.FileReader) {
+      // FileReader are supported.
+      getAsText(files[0]);
+  } else {
+      alert('FileReader are not supported in this browser.');
+  }
+}
+
+function getAsText(fileToRead) {
+  var reader = new FileReader();
+  // Read file into memory as UTF-8      
+  reader.readAsText(fileToRead);
+  // Handle errors load
+  reader.onload = loadHandler;
+  reader.onerror = errorHandler;
+}
+
+function loadHandler(event) {
+  var csv = event.target.result;
+  processData(csv);
+}
+
+function processData(csv) {
+    Tnode=[];
+    Tline=[];
+    Inode=[];
+    pointnum=0;
+    linenum=0;
+    inodenum=0;
+    var allTextLines = csv.split(/\r\n|\n/);
+    var lines = [];
+    for (var i=0; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split(',');
+        if(data[0][0] == 'T'){
+          var ptindx = parseFloat(data[0].split('-')[1]);
+          Tnode.push([pointnum, parseFloat(data[1]), parseFloat(data[2]), data[3], data[4], data[5], data[6], data[7], data[8], data[9]]);
+          Tline.push([pointnum])
+          addpoint([parseFloat(data[1]), parseFloat(data[2])]);
+          pointnum = pointnum+1
+        }
+        lines.push(data);
+    }
+    for(var i=0; i<lines.length-1;i++){
+      if(lines[i][0][0]=='T'){
+        var nline = 12+parseFloat(lines[i][10]);
+        for(var j=0;j<2*lines[i][10];j++){
+          var sindx = parseFloat(lines[i][0].split('-')[1]);
+          var toPoint = lines[i][nline+j]
+          var eindx = parseFloat(toPoint.split('_')[1].split('-')[1]);
+          if(sindx != eindx){
+            addline([Tnode[sindx][1], Tnode[sindx][2]], [Tnode[eindx][1], Tnode[eindx][2]], '#ff00ff', 2)
+
+            Tline[sindx].push([linenum, eindx]);
+            //Tline[eindx].push([linenum, sindx]);
+            linenum = linenum+1;
+          }
+        }
+      }
+    }
+    console.log(Tline)
+  
+}
+
+
+function errorHandler(evt) {
+  if(evt.target.error.name == "NotReadableError") {
+      alert("Canno't read file !");
+  }
+}
+
+function addpoint(coord){
+  var locationPoint = new ol.Feature({
+        geometry: new ol.geom.Point(coord)
+    });
+    locationPoint.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+
+    var locationLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                locationPoint
+            ]
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 10,
+            snapToPixel: false,
+            fill: new ol.style.Fill({color: '#00ff00'})
+          })
+        })
+    });
+    map.addLayer(locationLayer);
+}
+
+function id2name(TorI, id){
+  return TorI+floor.value+'-'+id
+}
+
+
 
 </script>
 </body>
